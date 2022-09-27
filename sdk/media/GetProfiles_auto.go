@@ -6,6 +6,7 @@ package media
 
 import (
 	"context"
+	"github.com/juju/errors"
 	"github.com/use-go/onvif"
 	"github.com/use-go/onvif/sdk"
 	"github.com/use-go/onvif/media"
@@ -21,9 +22,9 @@ func Call_GetProfiles(ctx context.Context, dev *onvif.Device, request media.GetP
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetProfilesResponse, err
+		return reply.Body.GetProfilesResponse, errors.Annotate(err, "call")
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetProfiles")
-		return reply.Body.GetProfilesResponse, err
+		return reply.Body.GetProfilesResponse, errors.Annotate(err, "reply")
 	}
 }

@@ -6,6 +6,7 @@ package media
 
 import (
 	"context"
+	"github.com/juju/errors"
 	"github.com/use-go/onvif"
 	"github.com/use-go/onvif/sdk"
 	"github.com/use-go/onvif/media"
@@ -21,9 +22,9 @@ func Call_GetCompatibleAudioDecoderConfigurations(ctx context.Context, dev *onvi
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetCompatibleAudioDecoderConfigurationsResponse, err
+		return reply.Body.GetCompatibleAudioDecoderConfigurationsResponse, errors.Annotate(err, "call")
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetCompatibleAudioDecoderConfigurations")
-		return reply.Body.GetCompatibleAudioDecoderConfigurationsResponse, err
+		return reply.Body.GetCompatibleAudioDecoderConfigurationsResponse, errors.Annotate(err, "reply")
 	}
 }

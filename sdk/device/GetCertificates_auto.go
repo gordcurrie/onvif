@@ -6,6 +6,7 @@ package device
 
 import (
 	"context"
+	"github.com/juju/errors"
 	"github.com/use-go/onvif"
 	"github.com/use-go/onvif/sdk"
 	"github.com/use-go/onvif/device"
@@ -21,9 +22,9 @@ func Call_GetCertificates(ctx context.Context, dev *onvif.Device, request device
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetCertificatesResponse, err
+		return reply.Body.GetCertificatesResponse, errors.Annotate(err, "call")
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetCertificates")
-		return reply.Body.GetCertificatesResponse, err
+		return reply.Body.GetCertificatesResponse, errors.Annotate(err, "reply")
 	}
 }

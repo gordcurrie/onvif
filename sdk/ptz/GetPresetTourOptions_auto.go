@@ -6,6 +6,7 @@ package ptz
 
 import (
 	"context"
+	"github.com/juju/errors"
 	"github.com/use-go/onvif"
 	"github.com/use-go/onvif/sdk"
 	"github.com/use-go/onvif/ptz"
@@ -21,9 +22,9 @@ func Call_GetPresetTourOptions(ctx context.Context, dev *onvif.Device, request p
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetPresetTourOptionsResponse, err
+		return reply.Body.GetPresetTourOptionsResponse, errors.Annotate(err, "call")
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetPresetTourOptions")
-		return reply.Body.GetPresetTourOptionsResponse, err
+		return reply.Body.GetPresetTourOptionsResponse, errors.Annotate(err, "reply")
 	}
 }

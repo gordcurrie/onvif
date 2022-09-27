@@ -6,6 +6,7 @@ package media
 
 import (
 	"context"
+	"github.com/juju/errors"
 	"github.com/use-go/onvif"
 	"github.com/use-go/onvif/sdk"
 	"github.com/use-go/onvif/media"
@@ -21,9 +22,9 @@ func Call_GetVideoSourceConfigurations(ctx context.Context, dev *onvif.Device, r
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetVideoSourceConfigurationsResponse, err
+		return reply.Body.GetVideoSourceConfigurationsResponse, errors.Annotate(err, "call")
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetVideoSourceConfigurations")
-		return reply.Body.GetVideoSourceConfigurationsResponse, err
+		return reply.Body.GetVideoSourceConfigurationsResponse, errors.Annotate(err, "reply")
 	}
 }

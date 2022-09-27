@@ -6,6 +6,7 @@ package device
 
 import (
 	"context"
+	"github.com/juju/errors"
 	"github.com/use-go/onvif"
 	"github.com/use-go/onvif/sdk"
 	"github.com/use-go/onvif/device"
@@ -21,9 +22,9 @@ func Call_GetServices(ctx context.Context, dev *onvif.Device, request device.Get
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetServicesResponse, err
+		return reply.Body.GetServicesResponse, errors.Annotate(err, "call")
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetServices")
-		return reply.Body.GetServicesResponse, err
+		return reply.Body.GetServicesResponse, errors.Annotate(err, "reply")
 	}
 }
