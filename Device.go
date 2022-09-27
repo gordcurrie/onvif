@@ -14,7 +14,6 @@ import (
 	"github.com/gordcurrie/onvif/device"
 	"github.com/gordcurrie/onvif/gosoap"
 	"github.com/gordcurrie/onvif/networking"
-	wsdiscovery "github.com/gordcurrie/onvif/ws-discovery"
 )
 
 //Xlmns XML Scheam
@@ -104,40 +103,6 @@ func readResponse(resp *http.Response) string {
 		panic(err)
 	}
 	return string(b)
-}
-
-//GetAvailableDevicesAtSpecificEthernetInterface ...
-func GetAvailableDevicesAtSpecificEthernetInterface(interfaceName string) ([]Device, error) {
-	// Call a ws-discovery Probe Message to Discover NVT type Devices
-	devices, err := wsdiscovery.SendProbe(interfaceName, nil, []string{"dn:" + NVT.String()}, map[string]string{"dn": "http://www.onvif.org/ver10/network/wsdl"})
-	if err != nil {
-		return nil, err
-	}
-
-	nvtDevicesSeen := make(map[string]bool)
-	nvtDevices := make([]Device, 0)
-
-	for _, j := range devices {
-		doc := etree.NewDocument()
-		if err := doc.ReadFromString(j); err != nil {
-			return nil, err
-		}
-
-		for _, xaddr := range doc.Root().FindElements("./Body/ProbeMatches/ProbeMatch/XAddrs") {
-			xaddr := strings.Split(strings.Split(xaddr.Text(), " ")[0], "/")[2]
-			if !nvtDevicesSeen[xaddr] {
-				dev, err := NewDevice(DeviceParams{Xaddr: strings.Split(xaddr, " ")[0]})
-				if err != nil {
-					// TODO(jfsmig) print a warning
-				} else {
-					nvtDevicesSeen[xaddr] = true
-					nvtDevices = append(nvtDevices, *dev)
-				}
-			}
-		}
-	}
-
-	return nvtDevices, nil
 }
 
 func (dev *Device) getSupportedServices(resp *http.Response) {
