@@ -6,10 +6,9 @@ package media
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/media"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/media"
 )
 
 // Call_GetAudioSourceConfigurations forwards the call to dev.CallMethod() then parses the payload of the reply as a GetAudioSourceConfigurationsResponse.
@@ -22,9 +21,9 @@ func Call_GetAudioSourceConfigurations(ctx context.Context, dev *onvif.Device, r
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetAudioSourceConfigurationsResponse, errors.Annotate(err, "call")
+		return reply.Body.GetAudioSourceConfigurationsResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetAudioSourceConfigurations")
-		return reply.Body.GetAudioSourceConfigurationsResponse, errors.Annotate(err, "reply")
+		return reply.Body.GetAudioSourceConfigurationsResponse, err
 	}
 }

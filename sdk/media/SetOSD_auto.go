@@ -6,10 +6,9 @@ package media
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/media"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/media"
 )
 
 // Call_SetOSD forwards the call to dev.CallMethod() then parses the payload of the reply as a SetOSDResponse.
@@ -22,9 +21,9 @@ func Call_SetOSD(ctx context.Context, dev *onvif.Device, request media.SetOSD) (
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.SetOSDResponse, errors.Annotate(err, "call")
+		return reply.Body.SetOSDResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "SetOSD")
-		return reply.Body.SetOSDResponse, errors.Annotate(err, "reply")
+		return reply.Body.SetOSDResponse, err
 	}
 }

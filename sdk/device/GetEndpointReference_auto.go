@@ -6,10 +6,9 @@ package device
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/device"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/device"
 )
 
 // Call_GetEndpointReference forwards the call to dev.CallMethod() then parses the payload of the reply as a GetEndpointReferenceResponse.
@@ -22,9 +21,9 @@ func Call_GetEndpointReference(ctx context.Context, dev *onvif.Device, request d
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetEndpointReferenceResponse, errors.Annotate(err, "call")
+		return reply.Body.GetEndpointReferenceResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetEndpointReference")
-		return reply.Body.GetEndpointReferenceResponse, errors.Annotate(err, "reply")
+		return reply.Body.GetEndpointReferenceResponse, err
 	}
 }

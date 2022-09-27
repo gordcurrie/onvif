@@ -6,10 +6,9 @@ package device
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/device"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/device"
 )
 
 // Call_GetServiceCapabilities forwards the call to dev.CallMethod() then parses the payload of the reply as a GetServiceCapabilitiesResponse.
@@ -22,9 +21,9 @@ func Call_GetServiceCapabilities(ctx context.Context, dev *onvif.Device, request
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetServiceCapabilitiesResponse, errors.Annotate(err, "call")
+		return reply.Body.GetServiceCapabilitiesResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetServiceCapabilities")
-		return reply.Body.GetServiceCapabilitiesResponse, errors.Annotate(err, "reply")
+		return reply.Body.GetServiceCapabilitiesResponse, err
 	}
 }

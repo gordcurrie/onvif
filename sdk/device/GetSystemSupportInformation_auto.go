@@ -6,10 +6,9 @@ package device
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/device"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/device"
 )
 
 // Call_GetSystemSupportInformation forwards the call to dev.CallMethod() then parses the payload of the reply as a GetSystemSupportInformationResponse.
@@ -22,9 +21,9 @@ func Call_GetSystemSupportInformation(ctx context.Context, dev *onvif.Device, re
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetSystemSupportInformationResponse, errors.Annotate(err, "call")
+		return reply.Body.GetSystemSupportInformationResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetSystemSupportInformation")
-		return reply.Body.GetSystemSupportInformationResponse, errors.Annotate(err, "reply")
+		return reply.Body.GetSystemSupportInformationResponse, err
 	}
 }

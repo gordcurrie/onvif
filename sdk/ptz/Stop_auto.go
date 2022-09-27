@@ -6,10 +6,9 @@ package ptz
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/ptz"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/ptz"
 )
 
 // Call_Stop forwards the call to dev.CallMethod() then parses the payload of the reply as a StopResponse.
@@ -22,9 +21,9 @@ func Call_Stop(ctx context.Context, dev *onvif.Device, request ptz.Stop) (ptz.St
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.StopResponse, errors.Annotate(err, "call")
+		return reply.Body.StopResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "Stop")
-		return reply.Body.StopResponse, errors.Annotate(err, "reply")
+		return reply.Body.StopResponse, err
 	}
 }

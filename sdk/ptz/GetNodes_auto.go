@@ -6,10 +6,9 @@ package ptz
 
 import (
 	"context"
-	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/ptz"
+	"github.com/gordcurrie/onvif"
+	"github.com/gordcurrie/onvif/sdk"
+	"github.com/gordcurrie/onvif/ptz"
 )
 
 // Call_GetNodes forwards the call to dev.CallMethod() then parses the payload of the reply as a GetNodesResponse.
@@ -22,9 +21,9 @@ func Call_GetNodes(ctx context.Context, dev *onvif.Device, request ptz.GetNodes)
 	}
 	var reply Envelope
 	if httpReply, err := dev.CallMethod(request); err != nil {
-		return reply.Body.GetNodesResponse, errors.Annotate(err, "call")
+		return reply.Body.GetNodesResponse, err
 	} else {
 		err = sdk.ReadAndParse(ctx, httpReply, &reply, "GetNodes")
-		return reply.Body.GetNodesResponse, errors.Annotate(err, "reply")
+		return reply.Body.GetNodesResponse, err
 	}
 }
