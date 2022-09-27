@@ -6,9 +6,9 @@ package media
 
 import (
 	"context"
-	"github.com/gordcurrie/onvif"
-	"github.com/gordcurrie/onvif/sdk"
-	"github.com/gordcurrie/onvif/media"
+	"git.taservs.net/federal-devices/go-onvif"
+	"git.taservs.net/federal-devices/go-onvif/sdk"
+	"git.taservs.net/federal-devices/go-onvif/media"
 )
 
 // Call_AddMetadataConfiguration forwards the call to dev.CallMethod() then parses the payload of the reply as a AddMetadataConfigurationResponse.

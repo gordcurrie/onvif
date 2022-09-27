@@ -6,9 +6,9 @@ package ptz
 
 import (
 	"context"
-	"github.com/gordcurrie/onvif"
-	"github.com/gordcurrie/onvif/sdk"
-	"github.com/gordcurrie/onvif/ptz"
+	"git.taservs.net/federal-devices/go-onvif"
+	"git.taservs.net/federal-devices/go-onvif/sdk"
+	"git.taservs.net/federal-devices/go-onvif/ptz"
 )
 
 // Call_SendAuxiliaryCommand forwards the call to dev.CallMethod() then parses the payload of the reply as a SendAuxiliaryCommandResponse.

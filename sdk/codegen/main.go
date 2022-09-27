@@ -18,9 +18,9 @@ package {{.Package}}
 
 import (
 	"context"
-	"github.com/gordcurrie/onvif"
-	"github.com/gordcurrie/onvif/sdk"
-	"github.com/gordcurrie/onvif/{{.StructPackage}}"
+	"git.taservs.net/federal-devices/go-onvif"
+	"git.taservs.net/federal-devices/go-onvif/sdk"
+	"git.taservs.net/federal-devices/go-onvif/{{.StructPackage}}"
 )
 
 // Call_{{.TypeRequest}} forwards the call to dev.CallMethod() then parses the payload of the reply as a {{.TypeReply}}.

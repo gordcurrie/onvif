@@ -10,10 +10,10 @@ import (
 	"strconv"
 	"strings"
 
+	"git.taservs.net/federal-devices/go-onvif/device"
+	"git.taservs.net/federal-devices/go-onvif/gosoap"
+	"git.taservs.net/federal-devices/go-onvif/networking"
 	"github.com/beevik/etree"
-	"github.com/gordcurrie/onvif/device"
-	"github.com/gordcurrie/onvif/gosoap"
-	"github.com/gordcurrie/onvif/networking"
 )
 
 //Xlmns XML Scheam

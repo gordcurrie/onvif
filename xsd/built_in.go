@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gordcurrie/onvif/xsd/iso8601"
+	"git.taservs.net/federal-devices/go-onvif/xsd/iso8601"
 )
 
 /*

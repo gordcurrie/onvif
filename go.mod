@@ -1,4 +1,4 @@
-module github.com/gordcurrie/onvif
+module git.taservs.net/federal-devices/go-onvif
 
 go 1.14
 
